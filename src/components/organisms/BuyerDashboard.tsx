@@ -139,7 +139,8 @@ export function BuyerDashboard() {
                 cursor={{ fill: '#2A303C', opacity: 0.4 }}
                 contentStyle={{ backgroundColor: '#1C212B', borderColor: '#374151', borderRadius: '8px', color: '#fff', fontSize: '12px' }}
                 itemStyle={{ color: '#818CF8', fontWeight: 'bold' }}
-                formatter={(value: number) => [`R$ ${value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`, 'Consumido']}
+                {/* CORREÇÃO DO TYPESCRIPT AQUI -> (value: any) */}
+                formatter={(value: any) => [`R$ ${Number(value).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`, 'Consumido']}
               />
               <Bar dataKey="spend" radius={[0, 4, 4, 0]} barSize={24}>
                 {departmentData.map((entry, index) => (
