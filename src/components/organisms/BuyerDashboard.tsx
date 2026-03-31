@@ -12,9 +12,9 @@ import { useNexoStore } from "@/store/useNexoStore";
 
 const TOTAL_BUDGET = 250000.00; // Orçamento corporativo simulado (Q1)
 
-// Variantes de Animação
+// Variantes de Animação com tipagem blindada (as const)
 const containerVariants = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } };
-const cardVariants = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 15 } } };
+const cardVariants = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 120, damping: 15 } } };
 
 export function BuyerDashboard() {
   const orders = useNexoStore((state) => state.orders);
@@ -133,7 +133,6 @@ export function BuyerDashboard() {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={departmentData} layout="vertical" margin={{ top: 0, right: 0, left: 30, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#2A303C" />
-              {/* Removidos os sm:fontSize e sm:width. Mantivemos valores estáticos ideais */}
               <XAxis type="number" stroke="#9CA3AF" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `R$${value/1000}k`} />
               <YAxis dataKey="name" type="category" stroke="#9CA3AF" fontSize={12} tickLine={false} axisLine={false} width={100} />
               <Tooltip 
@@ -142,7 +141,6 @@ export function BuyerDashboard() {
                 itemStyle={{ color: '#818CF8', fontWeight: 'bold' }}
                 formatter={(value: number) => [`R$ ${value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`, 'Consumido']}
               />
-              {/* Removido o sm:barSize. Mantivemos 24 */}
               <Bar dataKey="spend" radius={[0, 4, 4, 0]} barSize={24}>
                 {departmentData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={index === 0 ? '#6366F1' : index === 1 ? '#8B5CF6' : '#64748B'} />
