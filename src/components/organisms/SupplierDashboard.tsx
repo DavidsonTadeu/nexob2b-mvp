@@ -23,7 +23,7 @@ function useFinancialSplit(grossAmount: number) {
   };
 }
 
-// 2. Variantes de Animação em Cascata (Creative Dev)
+// 2. Variantes de Animação em Cascata (Creative Dev) com as const
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
@@ -37,7 +37,7 @@ const cardVariants = {
   show: { 
     opacity: 1, 
     y: 0, 
-    transition: { type: "spring", stiffness: 120, damping: 15 } 
+    transition: { type: "spring" as const, stiffness: 120, damping: 15 } 
   },
 };
 

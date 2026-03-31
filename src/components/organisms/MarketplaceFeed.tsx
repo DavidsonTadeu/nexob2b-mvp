@@ -88,7 +88,11 @@ function SupplierCard({ supplier }: { supplier: Supplier }) {
         <div className="min-w-0">
           <h3 className="text-white font-semibold flex items-center gap-2 truncate">
             <span className="truncate">{supplier.name}</span>
-            {supplier.homologated && <CheckCircle2 className="w-4 h-4 text-feedback-success shrink-0" title="Fornecedor Homologado NexoB2B" />}
+            {supplier.homologated && (
+              <span title="Fornecedor Homologado NexoB2B" className="flex shrink-0">
+                <CheckCircle2 className="w-4 h-4 text-feedback-success" />
+              </span>
+            )}
           </h3>
           <div className="flex items-center gap-1 text-feedback-warning text-sm font-medium mt-0.5">
             <Star className="w-3.5 h-3.5 fill-feedback-warning" />
@@ -199,7 +203,6 @@ export function MarketplaceFeed() {
 
   // --- GATILHO DA COMMAND PALETTE ---
   const triggerGlobalSearch = () => {
-    // Comunicação direta com a Command Palette via evento customizado (Mobile-safe)
     window.dispatchEvent(new CustomEvent('open-command-palette'));
   };
 
@@ -257,7 +260,6 @@ export function MarketplaceFeed() {
         {/* Controles de Topo: Gatilho Global, Switcher e Botão Filtro */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
           
-          {/* 💥 Gatilho Seguro da Busca Global (Mobile Friendly) */}
           <button 
             onClick={triggerGlobalSearch} 
             className="flex items-center gap-2 bg-brand-dark border border-brand-border hover:border-brand-primary rounded-lg px-4 py-2.5 sm:py-2 text-brand-muted hover:text-white transition-colors text-left w-full sm:w-[260px] group"
@@ -452,7 +454,7 @@ export function MarketplaceFeed() {
   );
 }
 
-// Variantes de Stagger (Creative Dev)
+// CORREÇÃO: "as const" no final do arquivo
 const staggerContainer = {
   hidden: { opacity: 0 },
   show: { opacity: 1, transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
@@ -460,5 +462,5 @@ const staggerContainer = {
 
 const staggerItem = {
   hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 150, damping: 20 } },
+  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 150, damping: 20 } },
 };
