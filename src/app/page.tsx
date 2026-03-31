@@ -20,12 +20,19 @@ const pageVariants = {
   },
 };
 
+// CORREÇÃO AQUI: 'as const' blindando o TypeScript do Framer Motion
 const sectionVariants = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 20 } },
+  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 120, damping: 20 } },
 };
 
 export default function Home() {
+  
+  // Gatilho global para a Command Palette
+  const triggerGlobalSearch = () => {
+    window.dispatchEvent(new CustomEvent('open-command-palette'));
+  };
+
   return (
     <motion.main 
       variants={pageVariants}
@@ -48,7 +55,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Quick Access Nav (Bento style) - LINKS CORRIGIDOS AQUI */}
+        {/* Quick Access Nav (Bento style) */}
         <div className="flex gap-4 w-full md:w-auto">
           <Link href="/dashboard/approvals" className="group flex-1 md:flex-none flex flex-col bg-brand-surface/50 hover:bg-brand-surface border border-brand-border rounded-xl p-4 transition-all hover:border-brand-primary/50">
             <KanbanSquare className="w-6 h-6 text-brand-muted group-hover:text-brand-primary transition-colors mb-3" />
@@ -64,14 +71,14 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* 2. Global Search Hint (Teclado-primeiro) */}
-      <motion.section variants={sectionVariants} className="px-6 md:px-12 py-6">
-        <div className="w-full bg-brand-dark border border-brand-border/60 rounded-xl p-4 flex items-center justify-between shadow-inner">
-          <div className="flex items-center gap-3 text-brand-muted">
-            <Search className="w-5 h-5" />
+      {/* 2. Global Search Hint (Agora clicável e interativo) */}
+      <motion.section variants={sectionVariants} className="px-6 md:px-12 py-6 cursor-pointer" onClick={triggerGlobalSearch}>
+        <div className="w-full bg-brand-dark border border-brand-border/60 hover:border-brand-primary/50 transition-colors rounded-xl p-4 flex items-center justify-between shadow-inner group">
+          <div className="flex items-center gap-3 text-brand-muted group-hover:text-white transition-colors">
+            <Search className="w-5 h-5 group-hover:text-brand-primary transition-colors" />
             <span className="text-sm">Busque por propostas, clientes ou ordens ativas...</span>
           </div>
-          <kbd className="hidden sm:inline-flex items-center gap-1 bg-brand-surface border border-brand-border rounded px-3 py-1.5 text-xs font-mono text-white shadow-sm">
+          <kbd className="hidden sm:inline-flex items-center gap-1 bg-brand-surface border border-brand-border rounded px-3 py-1.5 text-xs font-mono text-white shadow-sm group-hover:border-brand-primary/30 transition-colors">
             CTRL + K
           </kbd>
         </div>
